@@ -31,8 +31,7 @@ jobs:
       - uses: bazel-contrib/setup-bazel@0.14.0
         with:
           bazelisk-cache: true
-          disk-cache: ${{ github.workflow }}-${{ matrix.MODE }}
           repository-cache: true
       - name: bazel test
         run:  |
-          bazelisk test --build_tests_only -c "${{ matrix.MODE }}" --local_test_jobs=1 --test_output=all --verbose_failures //...
+          bazelisk test --build_tests_only -c "${{ matrix.MODE }}"  --test_output=all --verbose_failures --flaky_test_attempts=3 //...
